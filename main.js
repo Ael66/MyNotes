@@ -39,33 +39,41 @@ const createNote = () => {
 	newNote.classList.add('note')
 	newNote.setAttribute('id', cardID)
 	noteArea.append(newNote)
-	cardID++
 	selectedOption = category.options[category.selectedIndex].text
-
-
+	
 	newNote.innerHTML = `<div class="note-header">
-		<h3 class="note-title">${selectedOption}</h3>
-		<button class="delete-note" id=${cardID - 1}><i class="fas fa-times icon"></i></button>
-		</div><div class="note-body">${textArea.value}</div>`
-
-if(selectedOption === 'Zakupy') {
-	newNote.style = 'background-color: royalblue'
-} else if (selectedOption === 'Praca'){
-	newNote.style = 'background-color: greenyellow'
-} else {
-	false
+	<h3 class="note-title">${selectedOption}</h3>
+	<button class="delete-note" onclick="deleteNote(${cardID})"><i class="fas fa-times icon"></i></button>
+	</div><div class="note-body">${textArea.value}</div>`
+	
+	cardID++
+	colorNote(newNote)
 }
 
+const colorNote = note => {
+	switch (selectedOption) {
+		case 'Zakupy':
+			note.style = 'background-color: royalblue'
+			break
+		case 'Praca':
+			note.style = 'background-color: greenyellow'
+			break
+		default:
+			break
+	}
 }
-
-console.log(deleteBtn)
 
 const deleteAll = () => {
-	noteArea.innerHTML = ''
+	noteArea.textContent = ''
 }
+
+const deleteNote = (id) => {
+	const noteToDelete = document.getElementById(id)
+	noteArea.removeChild(noteToDelete)
+}
+
 
 addBtn.addEventListener('click', addNote)
 cancelBtn.addEventListener('click', cancelNote)
 saveBtn.addEventListener('click', saveNote)
 deleteAllBtn.addEventListener('click', deleteAll)
-console.log(deleteBtn.item(1))
